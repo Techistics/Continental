@@ -1,12 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { Link } from "lucide-react";
 
-export default function TrackOrderPage() {
+import React, { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link"; // ✅ Correct import (not from lucide-react)
+
+function TrackOrderContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
-  const router = useRouter();
 
   const [products, setProducts] = useState<{ id: number; name: string }[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
@@ -14,8 +14,9 @@ export default function TrackOrderPage() {
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [timeLeft, setTimeLeft] = useState(1 * 60);
 
-  // fetch products from DB
+  // ✅ Fetch products from API
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -31,6 +32,7 @@ export default function TrackOrderPage() {
     fetchProducts();
   }, []);
 
+  // ✅ Review submission
   async function handleReviewSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!selectedProduct) {
@@ -44,9 +46,7 @@ export default function TrackOrderPage() {
     try {
       const res = await fetch("/api/reviews", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           product_id: selectedProduct,
           rating,
@@ -63,42 +63,39 @@ export default function TrackOrderPage() {
         const err = await res.json();
         setMessage(`❌ Error: ${err.error || "Something went wrong"}`);
       }
-    } catch (error) {
-      setMessage("❌ Failed to submit review.");
     } finally {
       setLoading(false);
     }
   }
 
-  const [timeLeft, setTimeLeft] = useState(1 * 60);
-
+  // ✅ Countdown timer
   useEffect(() => {
     if (timeLeft <= 0) return;
     const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 10);
+      setTimeLeft((prev) => prev - 1);
     }, 1000);
     return () => clearInterval(timer);
   }, [timeLeft]);
 
-  // Format mm:ss
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-6">
       <h1 className="text-2xl font-bold mb-4">Track Your Order</h1>
-      <Link href='/'>Home</Link>
+      <Link href="/" className="text-blue-600 underline mb-3">
+        Home
+      </Link>
       <p className="text-gray-700 mb-2">Session ID: {sessionId}</p>
 
       {timeLeft > 0 ? (
         <p className="text-xl font-mono text-blue-600">
-          Estimated Delivery Time: {minutes}:
-          {seconds.toString().padStart(2, "0")}
+          Estimated Delivery Time: {minutes}:{seconds.toString().padStart(2, "0")}
         </p>
       ) : (
         <div className="text-xl font-bold text-green-600">
           ✅ Order Delivered!
-          <form onSubmit={handleReviewSubmit} className="max-w-md mx-auto">
+          <form onSubmit={handleReviewSubmit} className="max-w-md mx-auto mt-4">
             {/* Product Dropdown */}
             <label className="block mb-2 font-semibold">Select Product:</label>
             <select
@@ -115,9 +112,7 @@ export default function TrackOrderPage() {
             </select>
 
             {/* Rating Dropdown */}
-            <label className="block mb-2 font-semibold">
-              Rate this product:
-            </label>
+            <label className="block mb-2 font-semibold">Rate this product:</label>
             <select
               value={rating}
               onChange={(e) => setRating(Number(e.target.value))}
@@ -151,5 +146,16 @@ export default function TrackOrderPage() {
         </div>
       )}
     </div>
+  );
+}
+
+// ✅ Wrap content in Suspense + disable prerender
+export const dynamic = "force-dynamic";
+
+export default function TrackOrderPage() {
+  return (
+    <Suspense fallback={<div className="text-center p-6">Loading...</div>}>
+      <TrackOrderContent />
+    </Suspense>
   );
 }

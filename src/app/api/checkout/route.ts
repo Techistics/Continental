@@ -7,14 +7,13 @@ export async function POST(req: NextRequest) {
   try {
     const { items } = await req.json();
 
-    const lineItems = items.map(
-      (item: { name: string; price: number; quantity: number }) => ({
+    // Ensure proper typing of items
+    const lineItems = (items as { name: string; price: number; quantity: number }[]).map(
+      (item) => ({
         price_data: {
-          currency: "usd", // ✅ use supported currency
-          product_data: {
-            name: item.name,
-          },
-          unit_amount: Math.round(item.price * 100), // ✅ must be integer cents
+          currency: "usd",
+          product_data: { name: item.name },
+          unit_amount: Math.round(item.price * 100), // convert dollars to cents
         },
         quantity: item.quantity,
       })
@@ -30,8 +29,13 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ id: session.id, url: session.url });
-  } catch (err: any) {
-    console.error("Stripe Checkout Error:", err);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err) {
+    const message =
+      err instanceof Error
+        ? err.message
+        : "An unknown error occurred during Stripe checkout.";
+
+    console.error("❌ Stripe Checkout Error:", message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

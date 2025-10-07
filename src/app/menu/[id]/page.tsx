@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "../../context/cartContext";
+import { useRouter } from "next/navigation";
 
 type MenuItem = {
   id: number;
@@ -28,6 +29,7 @@ export default function MenuItemPage() {
   const [item, setItem] = useState<MenuItem | null>(null);
   const { addToCart } = useCart();
   const [reviews, setReviews] = useState<Review[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (id) {
@@ -66,14 +68,15 @@ export default function MenuItemPage() {
 
         <div className="flex gap-4 mt-6">
           <button
-            onClick={() =>
+            onClick={() =>{
               addToCart({
                 id: item.id,
                 name: item.name,
                 price: parseFloat(item.price as unknown as string),
                 quantity: 1,
-              })
-            }
+              });
+              router.push("/menu");
+            }}
             className="flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition"
           >
             Add to Cart

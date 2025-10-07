@@ -3,10 +3,14 @@ import pool from "../../../../../../db/index";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await context.params; // 👈 await required
   try {
-    const result = await pool.query("DELETE FROM MenuItems WHERE id = $1 RETURNING *", [params.id]);
+    const result = await pool.query(
+      "DELETE FROM MenuItems WHERE id = $1 RETURNING *",
+      [id]
+    );
 
     if (result.rowCount === 0) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
@@ -21,8 +25,9 @@ export async function DELETE(
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await context.params; // 👈 await required
   try {
     const { name, description, price, imageUrl } = await req.json();
 
@@ -30,7 +35,7 @@ export async function PUT(
       `UPDATE MenuItems 
        SET name = $1, description = $2, price = $3, imageUrl = $4 
        WHERE id = $5 RETURNING *`,
-      [name, description, price, imageUrl, params.id]
+      [name, description, price, imageUrl, id]
     );
 
     if (result.rowCount === 0) {

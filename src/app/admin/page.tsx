@@ -1,10 +1,18 @@
-import SalesChart from "./components/SalesChart";
+import Link from "next/link";
+import React from "react";
 
-export default function AdminPage() {
+const page = () => {
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">Admin Analytics Dashboard</h1>
-      <SalesChart />
+    <div>
+      <div className="text-red-700 text-2xl flex justify-center items-center p-20 font-semibold underline">
+        This is Admin Panel
+      </div>
+      <ul>
+        <Link href='/admin/sales'><li>Sales Chart</li></Link>
+        <Link href='/admin/products'><li>Products Management</li></Link>
+      </ul>
     </div>
   );
-}
+};
+
+export default page;

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Link } from "lucide-react";
 
 export default function TrackOrderPage() {
   const searchParams = useSearchParams();
@@ -86,6 +87,7 @@ export default function TrackOrderPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-6">
       <h1 className="text-2xl font-bold mb-4">Track Your Order</h1>
+      <Link href='/'>Home</Link>
       <p className="text-gray-700 mb-2">Session ID: {sessionId}</p>
 
       {timeLeft > 0 ? (

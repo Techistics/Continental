@@ -31,12 +31,12 @@ export default function MenuPage() {
         {items.map((item) => (
           <Link
             key={item.id}
-            href={`/menu/${item.id}`}
+            href={`/menuitems/${item.id}`}
             className="p-4 border rounded-xl shadow"
           >
             <div className="relative w-full h-40">
               <Image
-                src={item.image_url}
+                src="/next.svg"
                 alt={item.name}
                 fill
                 className="object-cover rounded"

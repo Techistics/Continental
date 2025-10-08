@@ -1,5 +1,7 @@
 "use client";
 
+import { Link } from "lucide-react";
+
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground text-center px-6">
@@ -21,12 +23,12 @@ export default function Home() {
       </p>
 
       {/* Button */}
-      <a
+      <Link
         href="/menu"
         className="px-6 py-3 bg-[#ff7b00] text-white rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
       >
         Explore Menu
-      </a>
+      </Link>
 
       {/* Footer */}
       <footer className="absolute bottom-6 text-sm text-[#ff7b00]">

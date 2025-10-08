@@ -7,7 +7,7 @@ declare global {
 const pool =
   global.cachedPool ||
   new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.NEXT_DATABASE_URL,
     ssl: { rejectUnauthorized: false },
   });
 

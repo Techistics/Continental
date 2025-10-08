@@ -13,7 +13,7 @@ export default function Qrpage() {
     <div>
       <div className="flex flex-col items-center justify-center min-h-screen">
         <h1 className="text-2xl font-bold mb-4">Scan to View Menu</h1>
-        {qr && <Image src={qr} alt="QR Code" fill/>}
+        {qr && <Image  className = "object-contain h-72 w-72 " src={qr} alt="QR Code" height={500} width={500}/>}
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ export default function Home() {
       </a>
 
       {/* Footer */}
-      <footer className="absolute bottom-6 text-sm text-gray-500 dark:text-gray-300">
+      <footer className="absolute bottom-6 text-sm text-[#ff7b00]">
         © {new Date().getFullYear()} Continental | Powered by Next.js
       </footer>
     </main>

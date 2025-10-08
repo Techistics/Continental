@@ -7,7 +7,7 @@ export default function Qrpage() {
   const [qr, setQr] = useState<string | null>(null);
 
   useEffect(() => {
-    qrCode("http://localhost:3000/menu").then(setQr);
+    qrCode("https://continentalemirates.vercel.app/menu").then(setQr);
   }, []);
   return (
     <div>

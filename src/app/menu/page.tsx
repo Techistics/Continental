@@ -24,6 +24,7 @@ export default function MenuPage() {
       .then((res) => res.json())
       .then((data) => setItems(data));
   }, []);
+  console.log(items)
 
   const handleAddToCart = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -60,23 +61,23 @@ export default function MenuPage() {
         <h1 className="text-3xl font-bold mb-6">Restaurant Menu</h1>
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => (
+          {items?.map((item) => (
             <div
-              key={item.id}
+              key={item?.id}
               className="p-4 border rounded-xl shadow hover:shadow-lg transition"
             >
-              <Link href={`/menu/${item.id}`}>
+              <Link href={`/menu/${item?.id}`}>
                 <div className="relative w-full h-40">
                   <Image
-                    src={item.image_url}
-                    alt={item.name}
+                    src={item?.image_url}
+                    alt={item?.name}
                     fill
                     className="object-cover rounded"
                   />
                 </div>
-                <h2 className="text-xl font-semibold mt-2">{item.name}</h2>
-                <p className="text-gray-600">{item.description}</p>
-                <p className="font-bold">${item.price}</p>
+                <h2 className="text-xl font-semibold mt-2">{item?.name}</h2>
+                <p className="text-gray-600">{item?.description}</p>
+                <p className="font-bold">${item?.price}</p>
               </Link>
 
               <button

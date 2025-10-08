@@ -30,6 +30,8 @@ export default function Home() {
         Explore Menu
       </Link>
 
+      <Link href="/qr" className="px-6 py-3 bg-[#ff7b00] text-white rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300">Scan to Order</Link>
+
       {/* Footer */}
       <footer className="absolute bottom-6 text-sm text-[#ff7b00]">
         © {new Date().getFullYear()} Continental | Powered by Next.js

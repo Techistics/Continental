@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -24,7 +24,7 @@ export default function Home() {
 
       {/* Button */}
       <Link
-        href="/menu"
+        href='/menu'
         className="px-6 py-3 bg-[#ff7b00] text-white rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
       >
         Explore Menu

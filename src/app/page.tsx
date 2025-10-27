@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   return (
+    <>
+    <Navbar/>
     <main className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground text-center px-6">
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#FFCCA1]/40 to-[#ff9b73]/60 -z-10 blur-3xl opacity-70" />
@@ -36,6 +39,6 @@ export default function Home() {
       <footer className="absolute bottom-6 text-sm text-[#ff7b00]">
         © {new Date().getFullYear()} Continental | Powered by Next.js
       </footer>
-    </main>
+    </main></>
   );
 }

@@ -13,13 +13,7 @@ const Navbar = () => {
     <div className="absolute top-0 left-0 w-full flex items-center px-6 py-1 bg-transparent z-20">
       {/* Left side - Logo */}
       <div className="flex items-center gap-2 px-0">
-        <Image
-          src="/icon.png"
-          alt="burger"
-          width={50}
-          height={30}
-          className=" pt-10"
-        />
+        
         <span className="font-bold text-lg px-0">Burger</span>
       </div>
 
